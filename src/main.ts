@@ -21,7 +21,7 @@ export function initSwagger(app: INestApplication) {
     .setVersion('0.0.0')
     .addSecurity('bearer', {
       type: 'apiKey',
-      name: 'access_token',
+      name: 'Access-Token',
       in: 'header',
     });
 

@@ -1,10 +1,12 @@
-import { Controller, Post, Get, Body, Delete, Param } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { PaymentsService } from './payments.service';
 import { ProcessOrderDto } from './payments.dto';
+import { AuthGuard } from '../../guards/auth.guard';
 
 @Controller('payments')
 @ApiTags('payments')
+@UseGuards(AuthGuard)
 export class PaymentController {
   constructor(private readonly paymentsService: PaymentsService) {}
 
