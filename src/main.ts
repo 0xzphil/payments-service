@@ -1,11 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { writeFileSync } from 'fs';
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, Logger } from '@nestjs/common';
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
 import { getConfig, getHost, getPort } from './common/config';
-
-console.log(getPort())
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {cors: true, bodyParser: true});
@@ -18,8 +16,8 @@ async function bootstrap() {
 
 export function initSwagger(app: INestApplication) {
   const builder = new DocumentBuilder()
-    .setTitle('Order Service API')
-    .setDescription('Swagger specification for Order Service API')
+    .setTitle('Payment Service API')
+    .setDescription('Swagger specification for Payment Service API')
     .setVersion('0.0.0')
     .addSecurity('bearer', {
       type: 'apiKey',
@@ -30,13 +28,18 @@ export function initSwagger(app: INestApplication) {
   const swaggerOpts = builder.build();
   const document = SwaggerModule.createDocument(app, swaggerOpts);
   writeFileSync(`./swagger.json`, JSON.stringify(document, null, 2), {encoding: 'utf8'});
-  SwaggerModule.setup('doc/orders', app, document, {
+  SwaggerModule.setup('doc/payments', app, document, {
     swaggerOptions: {
       displayOperationId: true,
     },
-    customSiteTitle: 'Order Service API',
+    customSiteTitle: 'Payment Service API',
   });
 }
 
-
-bootstrap();
+bootstrap().then(() => {
+  Logger.log(`Server started at http://${getHost()}:${getPort()}`);
+  Logger.log(`Swagger started at http://${getHost()}:${getPort()}/doc/payments`)
+  //console.log()
+}).catch(e => {
+  console.log(e)
+});

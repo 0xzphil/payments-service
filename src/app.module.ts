@@ -1,12 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { OrdersModule } from './modules/orders/orders.module';
+import { PaymentsModule } from './modules/payments/payments.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getConfig } from './common/config';
 
 const MONGO_DB_URI: string = getConfig().get('mongodb.uri');
-console.log(MONGO_DB_URI)
 
 @Module({
   imports: [
@@ -21,9 +18,7 @@ console.log(MONGO_DB_URI)
         }
       },
     }),
-    OrdersModule
+    PaymentsModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

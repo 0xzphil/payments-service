@@ -1,3 +1,3 @@
 export const DBModelNames = {
-  Order: 'orders'
+  Payment: 'payments'
 }

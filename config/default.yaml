@@ -3,7 +3,7 @@ server:
   port: 3045
 
 service:
-  baseUrl: /api/orders
+  baseUrl: /api/payments
 
 
 externalServices:
